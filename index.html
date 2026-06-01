@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Е-Ритм - инвест-презентация</title>
+  <link rel="icon" href="assets/pitch-deck/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --copper: #E66436;
+      --copper-700: #B94120;
+      --copper-100: #FFE4D6;
+      --carbon: #1A1A1A;
+      --carbon-850: #23201F;
+      --carbon-750: #34302E;
+      --carbon-650: #4A4542;
+      --paper: #F5F2ED;
+      --paper-soft: #FCFBF8;
+      --paper-dim: #EDE9E2;
+      --paper-line: #DCD6CC;
+      --muted: #6B7280;
+      --success: #22C55E;
+      --teal: #2F7D8C;
+      --steel: #CBD5E1;
+      --white: #FFFFFF;
+      --ink-soft: rgba(26, 26, 26, 0.66);
+      --shadow-soft: 0 22px 70px rgba(0, 0, 0, 0.24);
+      --shadow-card: 0 16px 38px rgba(65, 54, 45, 0.10);
+      --radius-card: 8px;
+      --duration: 600ms;
+      --duration-slow: 800ms;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --deck-max-width: 1611px;
+      --deck-max-height: 906px;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(135deg, #171514 0%, #28231F 52%, #181615 100%);
+      background-size: 42px 42px, 42px 42px, auto;
+      color: var(--carbon);
+      overflow: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    svg {
+      display: block;
+    }
+
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      position: relative;
+    }
+
+    .presentation::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(230, 100, 54, 0.14), transparent 28%, transparent 72%, rgba(47, 125, 140, 0.13)),
+        radial-gradient(circle at 50% 110%, rgba(245, 242, 237, 0.10), transparent 36%);
+    }
+
+    .deck-stage {
+      width: min(94vw, var(--deck-max-width), calc(94vh * 16 / 9), calc(var(--deck-max-height) * 16 / 9));
+      height: min(94vh, var(--deck-max-height), calc(94vw * 9 / 16), calc(var(--deck-max-width) * 9 / 16));
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow-soft);
+      isolation: isolate;
+    }
+
+    .deck-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.08);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      background:
+        linear-gradient(90deg, var(--carbon) 0 84px, transparent 84px),
+        linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 58%, #F0ECE4 100%);
+      opacity: 0;
+      visibility: hidden;
+      transform: none;
+      transition: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      z-index: 10;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 84px;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--copper), rgba(47, 125, 140, 0.72), transparent);
+      z-index: 2;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: 4px 0 0 84px;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(26, 26, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 26, 26, 0.035) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(120deg, transparent 0%, rgba(0, 0, 0, 0.24) 55%, transparent 100%);
+    }
+
+    .slide-rail {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px 0 46px;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    .rail-mark {
+      width: 46px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+    }
+
+    .rail-logo {
+      width: 40px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .rail-mark svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .rail-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.74);
+      letter-spacing: 0;
+    }
+
+    .rail-count {
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .rail-line {
+      width: 2px;
+      height: 88px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .rail-line span {
+      display: block;
+      width: 100%;
+      height: var(--rail-progress, 12.5%);
+      background: linear-gradient(var(--copper), var(--teal));
+      transition: height var(--duration) var(--ease);
+    }
+
+    .slide-main {
+      min-width: 0;
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 42px 58px 22px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(380px, 1.05fr);
+      gap: 36px;
+      align-items: center;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .content-grid > * {
+      min-width: 0;
+    }
+
+    .content-grid.hero-grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(440px, 1.1fr);
+      align-items: center;
+    }
+
+    .content-grid.reverse {
+      grid-template-columns: minmax(380px, 1.05fr) minmax(0, 0.95fr);
+    }
+
+    .content-grid.hero-grid.reverse {
+      grid-template-columns: minmax(440px, 1.1fr) minmax(0, 0.9fr);
+      align-items: center;
+    }
+
+    .content-grid.single {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      align-content: center;
+      gap: 26px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--carbon-650);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .kicker::before {
+      content: "";
+      width: 24px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--copper);
+    }
+
+    .slide h1 {
+      margin: 0;
+      max-width: 760px;
+      color: var(--carbon);
+      font-size: 48px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .hero-copy {
+      max-height: 520px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+    }
+
+    .slide h1 .accent {
+      color: var(--copper);
+    }
+
+    .lead {
+      margin: 20px 0 0;
+      max-width: 690px;
+      color: var(--ink-soft);
+      font-size: 21px;
+      line-height: 1.45;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .slide.active .kicker,
+    .slide.active h1,
+    .slide.active .lead,
+    .slide.active .metric-row,
+    .slide.active .module-grid,
+    .slide.active .bullet-stack,
+    .slide.active .flow-board,
+    .slide.active .feature-grid,
+    .slide.active .timeline-grid,
+    .slide.active .market-layout,
+    .slide.active .closing-grid,
+    .slide.active .visual-panel {
+      animation: revealUp var(--duration-slow) var(--ease) both;
+    }
+
+    .slide.active h1 { animation-delay: 80ms; }
+    .slide.active .lead { animation-delay: 160ms; }
+    .slide.active .metric-row,
+    .slide.active .module-grid,
+    .slide.active .bullet-stack,
+    .slide.active .flow-board,
+    .slide.active .feature-grid,
+    .slide.active .timeline-grid,
+    .slide.active .market-layout,
+    .slide.active .closing-grid { animation-delay: 240ms; }
+    .slide.active .visual-panel { animation-delay: 180ms; }
+
+    @keyframes revealUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .footer strong {
+      color: var(--carbon);
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-self: start;
+      gap: 8px;
+      width: fit-content;
+      min-height: 28px;
+      padding: 6px 10px;
+      border: 1px solid #F5BEA4;
+      border-radius: 999px;
+      background: var(--copper-100);
+      color: var(--copper-700);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .badge.teal {
+      border-color: #B7D4DA;
+      background: #DDECEF;
+      color: var(--teal);
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .metric-tile,
+    .panel,
+    .module-card,
+    .feature-card,
+    .stage-card,
+    .matrix-cell,
+    .ask-card,
+    .team-card {
+      position: relative;
+      border: 1px solid rgba(220, 214, 204, 0.86);
+      border-radius: var(--radius-card);
+      background: rgba(252, 251, 248, 0.86);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .metric-tile {
+      min-height: 124px;
+      padding: 18px;
+    }
+
+    .metric-tile::before,
+    .panel::before,
+    .module-card::before,
+    .feature-card::before,
+    .stage-card::before,
+    .ask-card::before,
+    .team-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), transparent 42%);
+    }
+
+    .metric-value {
+      position: relative;
+      color: var(--copper);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-label {
+      position: relative;
+      margin-top: 10px;
+      color: var(--carbon-650);
+      font-size: 13px;
+      line-height: 1.34;
+      font-weight: 700;
+    }
+
+    .visual-panel {
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(26, 26, 26, 0.10);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(237, 233, 226, 0.88)),
+        linear-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
+      background-size: auto, 28px 28px, 28px 28px;
+      box-shadow: var(--shadow-card);
+      min-height: 430px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-panel.dark {
+      background:
+        linear-gradient(135deg, var(--carbon-850), #171514),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: auto, 28px 28px, 28px 28px;
+      color: var(--paper);
+    }
+
+    .image-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      background: var(--carbon);
+    }
+
+    .visual-panel.image-panel {
+      min-height: 430px;
+      padding: 0;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .visual-panel.image-panel.hero-visual {
+      min-height: 0;
+      height: clamp(390px, 52vh, 520px);
+      max-height: 520px;
+    }
+
+    .image-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(18, 16, 15, 0.62), transparent 40%, rgba(18, 16, 15, 0.18)),
+        linear-gradient(0deg, rgba(18, 16, 15, 0.70), transparent 44%);
+    }
+
+    .image-panel.light-cut::before {
+      background:
+        linear-gradient(90deg, rgba(245, 242, 237, 0.22), transparent 42%, rgba(18, 16, 15, 0.14)),
+        linear-gradient(0deg, rgba(18, 16, 15, 0.58), transparent 50%);
+    }
+
+    .deck-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.01);
+    }
+
+    .image-overlay {
+      position: absolute;
+      z-index: 3;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      display: grid;
+      gap: 12px;
+      color: var(--paper);
+    }
+
+    .image-kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      min-height: 28px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      background: rgba(20, 18, 17, 0.54);
+      backdrop-filter: blur(12px);
+      color: rgba(245, 242, 237, 0.86);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .image-kicker .kicker-logo {
+      width: 16px;
+      height: 13px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .image-callout {
+      max-width: 420px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(20, 18, 17, 0.60);
+      backdrop-filter: blur(14px);
+    }
+
+    .slide[data-slide="7"] .image-callout {
+      width: min(640px, 100%);
+      max-width: none;
+    }
+
+    .image-callout strong {
+      display: block;
+      color: var(--paper);
+      font-size: 20px;
+      line-height: 1.16;
+      font-weight: 800;
+    }
+
+    .image-callout span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(245, 242, 237, 0.74);
+      font-size: 13px;
+      line-height: 1.38;
+      font-weight: 650;
+    }
+
+    .image-callout .source-note {
+      margin-top: 10px;
+      color: rgba(245, 242, 237, 0.56);
+      font-size: 11px;
+      line-height: 1.32;
+      font-weight: 700;
+    }
+
+    .mock-window {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 38px 1fr;
+      border: 1px solid rgba(26, 26, 26, 0.10);
+      border-radius: 8px;
+      background: rgba(252, 251, 248, 0.92);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mock-window.dark-window {
+      border-color: rgba(255, 255, 255, 0.11);
+      background: rgba(20, 18, 17, 0.78);
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .dark-window .window-bar {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.64);
+    }
+
+    .traffic {
+      display: flex;
+      gap: 6px;
+    }
+
+    .traffic span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--paper-line);
+    }
+
+    .traffic span:nth-child(1) { background: var(--copper); }
+    .traffic span:nth-child(2) { background: #EAB308; }
+    .traffic span:nth-child(3) { background: var(--success); }
+
+    .sheet-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 18px;
+    }
+
+    .paper-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .paper-row {
+      min-height: 46px;
+      display: grid;
+      grid-template-columns: 22px 1fr 54px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid rgba(220, 214, 204, 0.78);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .paper-row.danger {
+      border-color: rgba(230, 100, 54, 0.38);
+      background: rgba(255, 228, 214, 0.60);
+    }
+
+    .row-index {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background: var(--paper-dim);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .row-line {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--carbon-650), rgba(74, 69, 66, 0.10));
+    }
+
+    .row-line.short {
+      width: 76%;
+    }
+
+    .row-price {
+      color: var(--carbon);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .loss-panel {
+      display: grid;
+      align-content: space-between;
+      min-height: 100%;
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--carbon);
+      color: var(--paper);
+    }
+
+    .loss-panel svg {
+      width: 42px;
+      height: 42px;
+      color: var(--copper);
+    }
+
+    .loss-number {
+      margin-top: 18px;
+      font-size: 58px;
+      line-height: 0.95;
+      font-weight: 800;
+      color: var(--copper);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .loss-caption {
+      margin-top: 10px;
+      max-width: 210px;
+      color: rgba(245, 242, 237, 0.72);
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .module-card {
+      min-height: 220px;
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      align-content: start;
+    }
+
+    .module-card svg,
+    .feature-card svg,
+    .flow-step svg,
+    .stage-card svg {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      color: var(--copper);
+    }
+
+    .module-card h3,
+    .feature-card h3,
+    .stage-card h3,
+    .ask-card h3 {
+      position: relative;
+      margin: 18px 0 8px;
+      color: var(--carbon);
+      font-size: 19px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .module-card p,
+    .feature-card p,
+    .stage-card p,
+    .ask-card p {
+      position: relative;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 600;
+    }
+
+    .slide[data-slide="2"] .hero-copy {
+      max-height: none;
+    }
+
+    .slide[data-slide="2"] h1 {
+      font-size: 44px;
+      overflow-wrap: anywhere;
+    }
+
+    .slide[data-slide="2"] .lead {
+      margin-top: 16px;
+      font-size: 19px;
+    }
+
+    .slide[data-slide="2"] .module-grid {
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .slide[data-slide="2"] .module-card {
+      min-height: 190px;
+      padding: 18px;
+    }
+
+    .slide[data-slide="2"] .module-card svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .slide[data-slide="2"] .module-card h3 {
+      margin: 14px 0 8px;
+      font-size: 18px;
+    }
+
+    .slide[data-slide="2"] .module-card p {
+      font-size: 13px;
+      line-height: 1.36;
+      overflow-wrap: anywhere;
+    }
+
+    .slide[data-slide="2"] .module-card h3 {
+      overflow-wrap: anywhere;
+    }
+
+    .slide[data-slide="4"] .hero-copy {
+      max-height: none;
+    }
+
+    .slide[data-slide="4"] .bullet {
+      overflow-wrap: anywhere;
+    }
+
+    .product-shell {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0;
+      min-height: 386px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 2;
+    }
+
+    .mock-sidebar {
+      padding: 18px 12px;
+      background: linear-gradient(180deg, #211E1C, #151312);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .side-pill {
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.62);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .side-pill.active {
+      color: var(--paper);
+      background: linear-gradient(135deg, rgba(230, 100, 54, 0.84), rgba(230, 100, 54, 0.40));
+    }
+
+    .side-pill svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mock-workspace {
+      padding: 20px;
+      background: var(--paper-soft);
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .workspace-title {
+      color: var(--carbon);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .workspace-subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.10);
+      color: #15803D;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mock-table {
+      display: grid;
+      gap: 8px;
+    }
+
+    .mock-table-row {
+      display: grid;
+      grid-template-columns: 1.1fr 0.8fr 0.6fr;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid rgba(220, 214, 204, 0.78);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--carbon-650);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .mock-table-row.header {
+      background: var(--paper-dim);
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .mock-progress {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--paper-dim);
+      overflow: hidden;
+    }
+
+    .mock-progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--copper), var(--teal));
+    }
+
+    .flow-board {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .flow-board::before {
+      content: "";
+      position: absolute;
+      top: 44px;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--copper), var(--teal));
+      border-radius: 999px;
+      z-index: 0;
+    }
+
+    .flow-step {
+      position: relative;
+      z-index: 1;
+      min-height: 330px;
+      padding: 18px 18px 126px;
+      border: 1px solid rgba(220, 214, 204, 0.94);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(252, 251, 248, 0.98), rgba(237, 233, 226, 0.80)),
+        radial-gradient(circle at 100% 0%, rgba(230, 100, 54, 0.13), transparent 46%);
+      box-shadow: 0 18px 42px rgba(65, 54, 45, 0.13);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      align-content: start;
+    }
+
+    .flow-step::after,
+    .feature-card::after,
+    .stage-card::after,
+    .team-card::after,
+    .ask-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 18px 18px 18px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(230, 100, 54, 0.36), transparent);
+      pointer-events: none;
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 26px;
+      border-radius: 8px;
+      color: var(--paper);
+      background: var(--carbon);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .flow-step h3 {
+      margin: 16px 0 8px;
+      color: var(--carbon);
+      font-size: 18px;
+      line-height: 1.18;
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .card-proof {
+      align-self: end;
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 13px;
+      border-top: 1px solid rgba(220, 214, 204, 0.78);
+    }
+
+    .flow-step .card-proof {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      height: 88px;
+      margin-top: 0;
+      grid-template-rows: 16px 1fr;
+      align-content: start;
+    }
+
+    .mini-chip {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 7px;
+      min-height: 0;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--copper-700);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .mini-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--copper);
+      box-shadow: 0 0 0 4px rgba(230, 100, 54, 0.10);
+    }
+
+    .card-proof p {
+      margin: 0;
+      color: var(--carbon-650);
+      font-size: 12px;
+      line-height: 1.34;
+      font-weight: 700;
+    }
+
+    .mini-bar {
+      display: none;
+    }
+
+    .mini-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--copper), var(--teal));
+    }
+
+    .knowledge-map {
+      position: relative;
+      min-height: 386px;
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(135deg, #22201F, #151312);
+      background-size: 32px 32px, 32px 32px, auto;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .map-line {
+      position: absolute;
+      height: 2px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(230, 100, 54, 0.12), rgba(230, 100, 54, 0.72), rgba(47, 125, 140, 0.40));
+    }
+
+    .map-node {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 92px;
+      height: 92px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: var(--paper);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.20);
+      backdrop-filter: blur(12px);
+    }
+
+    .map-node.main {
+      width: 118px;
+      height: 118px;
+      background: linear-gradient(135deg, rgba(230, 100, 54, 0.88), rgba(47, 125, 140, 0.72));
+    }
+
+    .map-node svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .map-label {
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      color: rgba(245, 242, 237, 0.78);
+    }
+
+    .bullet-stack {
+      display: grid;
+      gap: 13px;
+      margin-top: 30px;
+      max-width: 650px;
+    }
+
+    .bullet {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      align-items: start;
+      gap: 13px;
+      color: var(--carbon-650);
+      font-size: 18px;
+      line-height: 1.36;
+      font-weight: 650;
+    }
+
+    .bullet span:first-child {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--copper);
+      background: rgba(230, 100, 54, 0.10);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .feature-card {
+      min-height: 330px;
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto auto auto auto 1fr;
+      background:
+        linear-gradient(145deg, rgba(252, 251, 248, 0.98), rgba(237, 233, 226, 0.80)),
+        radial-gradient(circle at 100% 0%, rgba(47, 125, 140, 0.12), transparent 48%);
+    }
+
+    .feature-card > * {
+      min-width: 0;
+    }
+
+    .slide[data-slide="5"] .feature-card {
+      overflow-wrap: anywhere;
+    }
+
+    .feature-metric {
+      position: relative;
+      margin: 18px 0 8px;
+      color: var(--copper);
+      font-size: 34px;
+      line-height: 1.08;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .timeline-grid::before {
+      content: "";
+      position: absolute;
+      top: 32px;
+      left: 12%;
+      right: 12%;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--success), var(--copper), var(--teal));
+    }
+
+    .stage-card {
+      min-height: 332px;
+      padding: 20px;
+      display: grid;
+      grid-template-rows: auto auto auto auto 1fr;
+      background:
+        linear-gradient(145deg, rgba(252, 251, 248, 0.98), rgba(237, 233, 226, 0.82)),
+        radial-gradient(circle at 100% 0%, rgba(230, 100, 54, 0.12), transparent 48%);
+    }
+
+    .stage-dot {
+      position: relative;
+      z-index: 1;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 24px;
+      border: 6px solid var(--paper-soft);
+      border-radius: 999px;
+      background: var(--copper);
+      box-shadow: 0 0 0 1px rgba(230, 100, 54, 0.24);
+    }
+
+    .stage-card.done .stage-dot {
+      background: var(--success);
+    }
+
+    .stage-card.next .stage-dot {
+      background: var(--teal);
+    }
+
+    .stage-date {
+      position: relative;
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .market-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+
+    .slide[data-slide="7"] .market-layout {
+      grid-template-columns: 1.22fr 0.78fr;
+    }
+
+    .market-stage {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto auto;
+      align-content: center;
+      gap: 18px;
+    }
+
+    .market-stage .lead {
+      max-width: 900px;
+    }
+
+    .tam-card {
+      min-height: 468px;
+      display: grid;
+      align-content: center;
+      padding: 30px;
+      border-radius: 8px;
+      color: var(--paper);
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(135deg, var(--carbon-850), #151312);
+      background-size: 30px 30px, 30px 30px, auto;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: var(--shadow-card);
+    }
+
+    .tam-number {
+      color: var(--copper);
+      font-size: 74px;
+      line-height: 0.95;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tam-title {
+      margin-top: 18px;
+      color: var(--paper);
+      font-size: 23px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .tam-formula {
+      margin-top: 22px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: rgba(245, 242, 237, 0.72);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 10px;
+    }
+
+    .matrix-cell {
+      min-height: 108px;
+      padding: 16px;
+      display: grid;
+      align-content: center;
+      background:
+        linear-gradient(145deg, rgba(252, 251, 248, 0.98), rgba(237, 233, 226, 0.82)),
+        radial-gradient(circle at 100% 0%, rgba(230, 100, 54, 0.10), transparent 50%);
+    }
+
+    .matrix-cell strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--carbon);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .matrix-cell span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.36;
+      font-weight: 650;
+    }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      margin-top: 18px;
+    }
+
+    .team-card,
+    .ask-card {
+      padding: 24px;
+      min-height: 402px;
+      display: grid;
+      grid-template-rows: auto auto auto auto 1fr auto;
+      align-items: start;
+      background:
+        linear-gradient(145deg, rgba(252, 251, 248, 0.98), rgba(237, 233, 226, 0.82)),
+        radial-gradient(circle at 100% 0%, rgba(230, 100, 54, 0.12), transparent 50%);
+    }
+
+    .ask-card {
+      grid-template-rows: auto auto auto auto auto 1fr auto;
+    }
+
+    .team-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(220, 214, 204, 0.74);
+    }
+
+    .team-row:last-child {
+      border-bottom: 0;
+    }
+
+    .founder-profile {
+      position: relative;
+      display: grid;
+      grid-template-columns: 126px 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(220, 214, 204, 0.74);
+    }
+
+    .founder-photo {
+      width: 126px;
+      height: 154px;
+      object-fit: cover;
+      object-position: center 24%;
+      border-radius: 8px;
+      border: 1px solid rgba(26, 26, 26, 0.10);
+      box-shadow: 0 18px 34px rgba(65, 54, 45, 0.16);
+    }
+
+    .founder-role {
+      color: var(--copper-700);
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .founder-summary {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
+    .founder-facts {
+      position: relative;
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      color: var(--carbon-650);
+      font-size: 13px;
+      line-height: 1.36;
+      font-weight: 700;
+    }
+
+    .founder-facts div {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .founder-facts div::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: var(--copper);
+      box-shadow: 0 0 0 4px rgba(230, 100, 54, 0.10);
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--copper);
+      background: rgba(230, 100, 54, 0.10);
+    }
+
+    .avatar svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .team-name {
+      color: var(--carbon);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .team-desc {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .ask-amount {
+      position: relative;
+      margin: 8px 0 18px;
+      color: var(--copper);
+      font-size: 56px;
+      line-height: 1.08;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .funds {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .fund-row {
+      display: grid;
+      grid-template-columns: 154px 1fr;
+      align-items: center;
+      gap: 12px;
+      color: var(--carbon-650);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .fund-bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--paper-dim);
+    }
+
+    .fund-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--copper), var(--teal));
+    }
+
+    .contact-line {
+      position: relative;
+      align-self: end;
+      min-height: 74px;
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      color: var(--carbon);
+      background: rgba(230, 100, 54, 0.09);
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+
+    .deck-controls {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(26, 26, 26, 0.74);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(14px);
+    }
+
+    .control-btn {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: transform 440ms var(--ease), background 440ms var(--ease);
+    }
+
+    .control-btn:hover {
+      transform: scale(1.02);
+      background: var(--copper);
+    }
+
+    .control-btn:active {
+      transform: scale(0.98);
+    }
+
+    .control-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(245, 242, 237, 0.30);
+      cursor: pointer;
+      transition: width 440ms var(--ease), background 440ms var(--ease);
+    }
+
+    .dot.active {
+      width: 26px;
+      background: var(--copper);
+    }
+
+    .progress-strip {
+      position: fixed;
+      z-index: 100;
+      top: 24px;
+      left: 50%;
+      width: min(360px, 42vw);
+      height: 3px;
+      transform: translateX(-50%);
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(245, 242, 237, 0.18);
+    }
+
+    .progress-strip span {
+      display: block;
+      width: var(--deck-progress, 12.5%);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--copper), var(--teal));
+      transition: width var(--duration) var(--ease);
+    }
+
+    .mobile-note {
+      display: none;
+    }
+
+    @media (max-width: 1180px) {
+      .slide-main {
+        padding: 44px 46px 22px;
+      }
+
+      .slide h1 {
+        font-size: 40px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+
+      .content-grid,
+      .content-grid.hero-grid,
+      .content-grid.hero-grid.reverse,
+      .content-grid.reverse,
+      .market-layout,
+      .closing-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .slide[data-slide="7"] .market-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-panel {
+        min-height: 300px;
+      }
+
+      .metric-row,
+      .module-grid,
+      .feature-grid,
+      .timeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flow-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flow-board::before,
+      .timeline-grid::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      html,
+      body {
+        overflow: hidden;
+      }
+
+      .presentation {
+        display: grid;
+        min-height: 100dvh;
+        height: 100dvh;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .deck-stage {
+        width: 100vw;
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: 0;
+      }
+
+      .progress-strip {
+        display: none;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        min-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: none;
+        background:
+          linear-gradient(90deg, var(--carbon) 0 48px, transparent 48px),
+          linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
+      }
+
+      .slide.active {
+        display: grid;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+
+      .slide::before {
+        left: 48px;
+      }
+
+      .slide::after {
+        left: 48px;
+      }
+
+      .slide-main {
+        display: block;
+        height: 100dvh;
+        min-height: 0;
+        padding: 34px 22px 18px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-bottom: 96px;
+      }
+
+      .content-grid,
+      .content-grid.single,
+      .content-grid.hero-grid,
+      .content-grid.hero-grid.reverse,
+      .content-grid.reverse,
+      .market-stage {
+        height: auto;
+        min-height: 0;
+        align-items: start;
+        align-content: start;
+      }
+
+      .hero-copy {
+        max-height: none;
+        align-content: start;
+      }
+
+      .slide h1 {
+        font-size: 30px;
+        line-height: 1.12;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .metric-row,
+      .module-grid,
+      .feature-grid,
+      .timeline-grid,
+      .flow-board {
+        grid-template-columns: 1fr;
+      }
+
+      .rail-mark {
+        width: 34px;
+        height: 28px;
+      }
+
+      .rail-logo {
+        width: 30px;
+        height: auto;
+      }
+
+      .rail-mark svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .slide-rail {
+        padding: 30px 0 66px;
+      }
+
+      .rail-title {
+        display: none;
+      }
+
+      .visual-panel {
+        min-height: 280px;
+        padding: 14px;
+      }
+
+      .visual-panel.image-panel {
+        min-height: 320px;
+        padding: 0;
+      }
+
+      .visual-panel.image-panel.hero-visual {
+        height: 320px;
+        max-height: 320px;
+      }
+
+      .sheet-body,
+      .product-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .mock-sidebar {
+        display: none;
+      }
+
+      .deck-controls {
+        bottom: 12px;
+      }
+
+      .control-btn {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: 16in 9in;
+        margin: 0;
+      }
+
+      html,
+      body {
+        overflow: visible;
+        background: white;
+      }
+
+      .presentation {
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+
+      .presentation::before,
+      .deck-stage::after,
+      .deck-controls,
+      .progress-strip {
+        display: none;
+      }
+
+      .deck-stage {
+        width: 100vw;
+        height: auto;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+      }
+
+      .slide {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        page-break-after: always;
+      }
+
+      .slide .kicker,
+      .slide h1,
+      .slide .lead,
+      .slide .metric-row,
+      .slide .module-grid,
+      .slide .bullet-stack,
+      .slide .flow-board,
+      .slide .feature-grid,
+      .slide .timeline-grid,
+      .slide .market-layout,
+      .slide .closing-grid,
+      .slide .visual-panel {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8"></path><path d="M8 17h6"></path>
+    </symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 1v3"></path><path d="M15 1v3"></path><path d="M9 20v3"></path><path d="M15 20v3"></path><path d="M20 9h3"></path><path d="M20 15h3"></path><path d="M1 9h3"></path><path d="M1 15h3"></path>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path>
+    </symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.7-4 3-9 3s-9-1.3-9-3"></path><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"></path>
+    </symbol>
+    <symbol id="i-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m7.5 4.2 9 5.2"></path><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7 12 12l8.7-5"></path><path d="M12 22V12"></path>
+    </symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2 3 14h8l-1 8 11-14h-8l1-6z"></path>
+    </symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m20 6-11 11-5-5"></path>
+    </symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>
+    </symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 3v18h18"></path><path d="m7 15 4-4 3 3 5-7"></path>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M16 3.1a4 4 0 0 1 0 7.8"></path>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+    </symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"></path>
+    </symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"></path>
+    </symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 14h12v8H6z"></path>
+    </symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+    </symbol>
+  </svg>
+
+  <main class="presentation">
+    <div class="progress-strip" aria-hidden="true"><span id="deckProgress"></span></div>
+    <section class="deck-stage" aria-label="Инвест-презентация Е-Ритм">
+      <article class="slide active" data-slide="1" data-title="Проблема">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Проблема</div>
+          <div class="rail-count"><span>01</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid hero-grid">
+            <div class="hero-copy">
+              <div class="kicker">Реалии инженерного рынка</div>
+              <h1>Компании <span class="accent">теряют деньги</span> на сметах</h1>
+              <p class="lead">В любой инжиниринговой компании создание сметы остается ручной операцией. Ошибка в спецификации превращается в проигранный тендер, а в расчете трудозатрат в прямой убыток компании.</p>
+              <div class="metric-row">
+                <div class="metric-tile">
+                  <div class="metric-value">3-4 ч</div>
+                  <div class="metric-label">на спецификацию из 20 позиций, только подбор оборудования</div>
+                </div>
+                <div class="metric-tile">
+                  <div class="metric-value">30-40%</div>
+                  <div class="metric-label">ошибок в расчетах трудозатрат</div>
+                </div>
+                <div class="metric-tile">
+                  <div class="metric-value">70%</div>
+                  <div class="metric-label">времени pre-sale инженера, сметчика уходит на рутину</div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-panel image-panel hero-visual light-cut">
+              <img class="deck-image" src="assets/pitch-deck/problem-estimation.png" alt="Инженерный стол со схемами, сметными таблицами, часами и оборудованием">
+              <div class="image-overlay">
+                <div class="image-kicker"><svg width="14" height="14"><use href="#i-alert"></use></svg> проблема рынка</div>
+                <div class="image-callout">
+                  <strong>Ручная смета замедляет продажи и съедает маржу</strong>
+                  <span>3-4 часа на проект, 30-40% ошибок в расчетах трудозатрат и 15 000+ компаний в целевом рынке.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / сметы и управление проектами</span><span>Ранняя стадия, продукт в разработке</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="2" data-title="Решение">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Решение</div>
+          <div class="rail-count"><span>02</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid hero-grid">
+            <div class="hero-copy">
+              <div class="kicker">Платформа для инженеров XXI века</div>
+              <h1><span class="accent">Е-Ритм</span>: управление проектами от ТЗ до планирования работ за минуты</h1>
+              <p class="lead">Сервис объединяет подбор оборудования, составление спецификаций и смет, а также планирование проекта в одном рабочем контуре для инженерных команд.</p>
+              <div class="module-grid">
+                <div class="module-card">
+                  <svg><use href="#i-cpu"></use></svg>
+                  <h3>Подбор оборудования</h3>
+                  <p>ИИ сопоставляет требования ТЗ с артикулом, документацией и совместимостью.</p>
+                </div>
+                <div class="module-card">
+                  <svg><use href="#i-file"></use></svg>
+                  <h3>Сметы</h3>
+                  <p>Смета из спецификации за минуты, с нормами расчета трудозатрат.</p>
+                </div>
+                <div class="module-card">
+                  <svg><use href="#i-calendar"></use></svg>
+                  <h3>Планирование</h3>
+                  <p>Автоматический график производства работ с зависимостями и производственными ограничениями.</p>
+                </div>
+              </div>
+            </div>
+            <div class="visual-panel image-panel hero-visual">
+              <img class="deck-image" src="assets/pitch-deck/product-dashboard.png" alt="Премиальный интерфейс сервиса с таблицей сметы, графиком Гант и ИИ-метриками">
+              <div class="image-overlay">
+                <div class="image-kicker"><img class="kicker-logo" src="assets/pitch-deck/logo.png" alt=""> единый продуктовый контур</div>
+                <div class="image-callout">
+                  <strong>Подбор спецификации, расчет трудозатрат и график производства в одном сервисе</strong>
+                  <span>Инженер загружает ТЗ и получает спецификацию, смету и план работ без ручной сборки в таблицах.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / единый контур проекта</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="3" data-title="Как работает система">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Как работает система</div>
+          <div class="rail-count"><span>03</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid single">
+            <div>
+              <div class="kicker">Как работает система</div>
+              <h1>От Технического Задания до Графика Производства Работ <span class="accent">с минимальными правками руками</span></h1>
+              <p class="lead">Пользователь загружает исходные требования, а система превращает их в инженерно проверяемую структуру: оборудование, работы, нормы и график.</p>
+            </div>
+            <div class="flow-board">
+              <div class="flow-step">
+                <div class="step-num">1</div>
+                <svg><use href="#i-file"></use></svg>
+                <h3>Загрузка ТЗ</h3>
+                <p>Спецификация, требования, помещения и ограничения проекта.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">входные данные</span>
+                  <div class="mini-bar"><span style="width: 62%"></span></div>
+                  <p>Система извлекает структуру проекта и спорные места для проверки.</p>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="step-num">2</div>
+                <svg><use href="#i-cpu"></use></svg>
+                <h3>Автоматизация</h3>
+                <p>Сопоставление требований с базой знаний и документацией производителей.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">точность подбора</span>
+                  <div class="mini-bar"><span style="width: 86%"></span></div>
+                  <p>Кандидаты ранжируются по требованиям и подтвержденным источникам.</p>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="step-num">3</div>
+                <svg><use href="#i-zap"></use></svg>
+                <h3>Смета</h3>
+                <p>Автоматические нормы трудозатрат, коэффициенты и стоимость строк.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">расчёт стоимости</span>
+                  <div class="mini-bar"><span style="width: 78%"></span></div>
+                  <p>Нормы, бригады и коэффициенты сходятся в финансовый результат.</p>
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="step-num">4</div>
+                <svg><use href="#i-calendar"></use></svg>
+                <h3>Графики</h3>
+                <p>График работ с зависимостями, бригадами и производственными окнами.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">план работ</span>
+                  <div class="mini-bar"><span style="width: 72%"></span></div>
+                  <p>Коммерческое КП сразу получает производственный план.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / инженерный конвейер</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="4" data-title="База знаний">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">База знаний</div>
+          <div class="rail-count"><span>04</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid hero-grid reverse">
+            <div class="visual-panel image-panel hero-visual">
+              <img class="deck-image" src="assets/pitch-deck/knowledge-graph.png" alt="ИИ-база знаний с оборудованием, документацией, работами и проверенными фактами">
+              <div class="image-overlay">
+                <div class="image-kicker"><svg width="14" height="14"><use href="#i-database"></use></svg> защитный актив</div>
+                <div class="image-callout">
+                  <strong>Накопление инженерной экспертизы становится активом</strong>
+                  <span>Документация, спецификации, монтажные требования и работы связываются в проверяемую базу знаний.</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-copy">
+              <div class="kicker">Защитный актив</div>
+              <h1><span class="accent">Живая база</span> знает об оборудовании все</h1>
+              <p class="lead">Е-Ритм не хранит статичный справочник. Система непрерывно читает документацию производителей и превращает ее в инженерные факты.</p>
+              <div class="bullet-stack">
+                <div class="bullet"><span>01</span><div>Каждый артикул получает спецификации, монтажные требования, факты по настройке оборудования и типовые работы.</div></div>
+                <div class="bullet"><span>02</span><div>Охват: любые инженерные сферы (Pro-AV, СКС, СОУЭ, СКУД, видеонаблюдение и пр.).</div></div>
+                <div class="bullet"><span>03</span><div>Данные обновляются автоматически и становятся барьером входа для конкурентов.</div></div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / база знаний как актив</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="5" data-title="Продукт">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Продукт</div>
+          <div class="rail-count"><span>05</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid single">
+            <div>
+              <div class="kicker">Ценность для клиента</div>
+              <h1>Что получает клиент</h1>
+              <p class="lead">Не просто очередной ИИ-помощник, а рабочий продукт для коммерческого отдела, инженеров ПНР и руководителя проекта</p>
+            </div>
+            <div class="feature-grid">
+              <div class="feature-card">
+                <svg><use href="#i-cpu"></use></svg>
+                <div class="feature-metric">Автоматизация</div>
+                <h3>Подбор</h3>
+                <p>Поиск оборудования по параметрам ТЗ и совместимости.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">есть обоснование</span>
+                  <div class="mini-bar"><span style="width: 76%"></span></div>
+                  <p>Подбор объясняется документацией и требованиями.</p>
+                </div>
+              </div>
+              <div class="feature-card">
+                <svg><use href="#i-file"></use></svg>
+                <div class="feature-metric">15 мин</div>
+                <h3>Смета</h3>
+                <p>Из спецификации вместо 4 часов ручной подготовки.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">-85% времени</span>
+                  <div class="mini-bar"><span style="width: 85%"></span></div>
+                  <p>Быстрее выпуск КП и меньше ручных пересчётов.</p>
+                </div>
+              </div>
+              <div class="feature-card">
+                <svg><use href="#i-calendar"></use></svg>
+                <div class="feature-metric">Графики</div>
+                <h3>График</h3>
+                <p>Автоматическая последовательность работ и зависимостей.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">план проекта</span>
+                  <div class="mini-bar"><span style="width: 70%"></span></div>
+                  <p>Смета превращается в управляемый производственный план.</p>
+                </div>
+              </div>
+              <div class="feature-card">
+                <svg><use href="#i-zap"></use></svg>
+                <div class="feature-metric">Контроль</div>
+                <h3>Коэффициенты</h3>
+                <p>Ночные, высотные, режимные и объектовые условия.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">защита маржи</span>
+                  <div class="mini-bar"><span style="width: 82%"></span></div>
+                  <p>Условия объекта не теряются при расчёте стоимости.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / продуктовая ценность</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="6" data-title="План">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">План</div>
+          <div class="rail-count"><span>06</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="content-grid single">
+            <div>
+              <div class="kicker">Стадия проекта</div>
+              <h1><span class="accent">Основные модули реализованы</span>, пилот нацелен на 4 квартал 2026 года</h1>
+              <p class="lead">Сейчас идет тестирование, исправление багов и улучшение алгоритмов. Коммерческий запуск запланирован на 1 квартал 2027 года.</p>
+            </div>
+            <div class="timeline-grid">
+              <div class="stage-card done">
+                <div class="stage-dot"></div>
+                <div class="stage-date">Сейчас</div>
+                <h3>Модули реализованы</h3>
+                <p>Сметы, база знаний, автоматизация, графики и ключевые сценарии продукта.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">ядро продукта</span>
+                  <div class="mini-bar"><span style="width: 72%"></span></div>
+                  <p>Функциональный фундамент уже собран в первой версии.</p>
+                </div>
+              </div>
+              <div class="stage-card">
+                <div class="stage-dot"></div>
+                <div class="stage-date">Идёт</div>
+                <h3>Тестирование и исправления</h3>
+                <p>Тестирование, исправление багов и улучшение алгоритмов.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">проверка качества</span>
+                  <div class="mini-bar"><span style="width: 58%"></span></div>
+                  <p>Оптимизируем алгоритмы для снижения рисков внедрения перед пилотами.</p>
+                </div>
+              </div>
+              <div class="stage-card next">
+                <div class="stage-dot"></div>
+                <div class="stage-date">4 квартал 2026</div>
+                <h3>Пилот</h3>
+                <p>Пилот нацелен на реальные инжиниринговые проекты и проверку ценности.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">пилотный запуск</span>
+                  <div class="mini-bar"><span style="width: 44%"></span></div>
+                  <p>Собираем измеримые кейсы по скорости и марже.</p>
+                </div>
+              </div>
+              <div class="stage-card">
+                <div class="stage-dot"></div>
+                <div class="stage-date">1 квартал 2027</div>
+                <h3>Запуск</h3>
+                <p>Коммерческий запуск сервиса и первые регулярные продажи.</p>
+                <div class="card-proof">
+                  <span class="mini-chip">выход на рынок</span>
+                  <div class="mini-bar"><span style="width: 36%"></span></div>
+                  <p>Переход от пилотов к регулярным продажам сервиса.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / стадия и план</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="7" data-title="Рынок">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Рынок</div>
+          <div class="rail-count"><span>07</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div class="market-stage">
+            <div class="market-copy">
+              <div class="kicker">Рынок</div>
+              <h1>Голубой океан в российском инжиниринге</h1>
+              <p class="lead">Прямых аналогов в России нет: рынок закрывает задачу табличными шаблонами, 1С-сметами и ручной экспертизой.</p>
+            </div>
+            <div class="market-layout">
+              <div class="tam-card image-panel">
+                <img class="deck-image" src="assets/pitch-deck/market-network.png" alt="Сеть инжиниринговых компаний на карте рынка, сходящаяся к ИИ-платформе">
+                <div class="image-overlay">
+                  <div class="image-kicker"><svg width="14" height="14"><use href="#i-chart"></use></svg> рыночная возможность</div>
+                  <div class="image-callout">
+                    <strong>55 тысяч инженерных компаний в России</strong>
+                    <span>Потенциал рынка: 55 тысяч инженерных компаний × 240 000 ₽/год = 13,2 млрд ₽/год.<br>Средний чек 20 000 ₽/мес. — расчетная цена подписки на сервис.</span>
+                    <span class="source-note">ФНС: юрлица МСП с ОКВЭД 71.12, 10.05.2026.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="matrix">
+                <div class="matrix-cell"><strong>Табличные шаблоны</strong><span>Быстро начать, но нет базы знаний, контроля ошибок и масштабирования.</span></div>
+                <div class="matrix-cell"><strong>1С-сметы</strong><span>Сильны в учете, но не решают ИИ-подбор и инженерную нормализацию ТЗ.</span></div>
+                <div class="matrix-cell"><strong>Ручной труд</strong><span>Экспертиза держится на людях, скорость продаж и маржа ограничены.</span></div>
+                <div class="matrix-cell"><strong>Барьер входа</strong><span>Накопленная ИИ-база знаний об оборудовании, работах и нормах.</span></div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / рынок и конкуренты</span></footer>
+        </div>
+      </article>
+
+      <article class="slide" data-slide="8" data-title="Бюджет">
+        <aside class="slide-rail">
+          <div class="rail-mark"><img class="rail-logo" src="assets/pitch-deck/logo.png" alt="Е-Ритм"></div>
+          <div class="rail-title">Бюджет</div>
+          <div class="rail-count"><span>08</span><div class="rail-line"><span></span></div><span>08</span></div>
+        </aside>
+        <div class="slide-main">
+          <div>
+            <div class="kicker">Запрос</div>
+            <h1>Завершаю продукт и выхожу к первым продажам</h1>
+            <p class="lead">Я самостоятельно разрабатываю продукт. Инвестиции помогут завершить разработку, продвинуть сервис и выйти к первым продажам.</p>
+          </div>
+          <div class="closing-grid">
+            <div class="team-card">
+              <span class="badge teal">Основатель</span>
+              <div class="founder-profile">
+                <img class="founder-photo" src="assets/pitch-deck/founder-rytov.jpg" alt="Рытов Евгений, основатель Е-Ритм">
+                <div>
+                  <div class="founder-role">основатель и технический руководитель</div>
+                  <div class="team-name">Рытов Евгений</div>
+                  <div class="founder-summary">Я аудиовизуальный инженер, разработчик систем управления и других инженерных систем с 15-летним опытом.</div>
+                </div>
+              </div>
+              <div class="founder-facts">
+                <div>Самостоятельно реализую продукт, ИИ-конвейер и первые отраслевые сценарии.</div>
+                <div>Мой опыт в инженерных проектах помогает создать действительно полезный инструмент.</div>
+              </div>
+              <div class="card-proof">
+                <span class="mini-chip">фокус на запуске</span>
+                <div class="mini-bar"><span style="width: 68%"></span></div>
+                <p>На этом раунде я ускоряю завершение разработки и выход к первым клиентам.</p>
+              </div>
+              <div class="contact-line">Контакты: +7 (916) 128-67-00</div>
+            </div>
+            <div class="ask-card">
+              <span class="badge">Бюджет</span>
+              <h3>Ищу инвестиции</h3>
+              <div class="ask-amount">5 млн ₽</div>
+              <p>Бюджет, необходимый на 18 месяцев до регулярных продаж и понятной ежемесячной выручки.</p>
+              <div class="card-proof">
+                <span class="mini-chip">цель на 18 месяцев</span>
+                <div class="mini-bar"><span style="width: 74%"></span></div>
+                <p>50 активных клиентов × 20 000 ₽ в месяц = 1 млн ₽ ежемесячной выручки.</p>
+              </div>
+              <div class="funds">
+                <div class="fund-row"><span>Завершение разработки</span><div class="fund-bar"><span style="width: 40%"></span></div></div>
+                <div class="fund-row"><span>Продвижение продукта</span><div class="fund-bar"><span style="width: 60%"></span></div></div>
+              </div>
+              <div class="contact-line">Цель: 50 активных клиентов за 18 месяцев, каждый платит 20 000 ₽ в месяц.</div>
+            </div>
+          </div>
+          <footer class="footer"><span><strong>Е-Ритм</strong> / финальный слайд</span></footer>
+        </div>
+      </article>
+    </section>
+
+    <nav class="deck-controls" aria-label="Навигация по слайдам">
+      <button class="control-btn" type="button" id="prevBtn" title="Предыдущий слайд" aria-label="Предыдущий слайд"><svg><use href="#i-chevron-left"></use></svg></button>
+      <div class="dots" id="dots" aria-label="Слайды"></div>
+      <button class="control-btn" type="button" id="nextBtn" title="Следующий слайд" aria-label="Следующий слайд"><svg><use href="#i-chevron-right"></use></svg></button>
+      <button class="control-btn" type="button" id="printBtn" title="Печать или экспорт PDF" aria-label="Печать или экспорт PDF"><svg><use href="#i-printer"></use></svg></button>
+      <button class="control-btn" type="button" id="fullBtn" title="На весь экран" aria-label="На весь экран"><svg><use href="#i-expand"></use></svg></button>
+    </nav>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsRoot = document.getElementById("dots");
+    const progress = document.getElementById("deckProgress");
+    const stage = document.querySelector(".deck-stage");
+    let current = 0;
+
+    function buildDots() {
+      slides.forEach((slide, index) => {
+        const dot = document.createElement("button");
+        dot.className = "dot";
+        dot.type = "button";
+        dot.dataset.index = String(index);
+        dot.title = slide.dataset.title || `Слайд ${index + 1}`;
+        dot.setAttribute("aria-label", `Открыть слайд ${index + 1}`);
+        dot.addEventListener("click", () => showSlide(index));
+        dotsRoot.appendChild(dot);
+      });
+    }
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+        slide.style.setProperty("--rail-progress", `${((current + 1) / slides.length) * 100}%`);
+      });
+      Array.from(dotsRoot.children).forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === current);
+        dot.setAttribute("aria-current", dotIndex === current ? "true" : "false");
+      });
+      const percent = ((current + 1) / slides.length) * 100;
+      progress.style.setProperty("--deck-progress", `${percent}%`);
+      document.title = `Е-Ритм - инвест-презентация (${current + 1}/${slides.length})`;
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => showSlide(current - 1));
+    document.getElementById("nextBtn").addEventListener("click", () => showSlide(current + 1));
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    document.getElementById("fullBtn").addEventListener("click", async () => {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    let touchStartX = 0;
+    stage.addEventListener("touchstart", (event) => {
+      touchStartX = event.touches[0].clientX;
+    }, { passive: true });
+    stage.addEventListener("touchend", (event) => {
+      const diff = touchStartX - event.changedTouches[0].clientX;
+      if (Math.abs(diff) > 48) {
+        showSlide(diff > 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+
+    buildDots();
+    showSlide(0);
+  </script>
+</body>
+</html>
